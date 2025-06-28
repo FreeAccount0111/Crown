@@ -8,6 +8,8 @@ namespace Gameplay.Controller
     {
         [SerializeField] private Transform posStart;
         [SerializeField] private List<CardController> cards = new List<CardController>();
+        
+        public bool hasCards => cards.Count > 0;
 
         public bool CanSelectCard(CardController card,List<CardController> cardMoving)
         {
@@ -32,6 +34,9 @@ namespace Gameplay.Controller
 
         public bool CanAddCard(CardController newCard)
         {
+            if (cards.Count == 0)
+                return true;
+            
             if (CanConnectCard(newCard,cards[^1]))
                 return true;
             else
@@ -72,7 +77,7 @@ namespace Gameplay.Controller
         {
             if ((card1.Data.indexCard == card2.Data.indexCard + 1
                  || card2.Data.indexCard - card1.Data.indexCard == 5)
-                && card1.Data.colorType != card2.Data.colorType)
+                /*&& card1.Data.colorType != card2.Data.colorType*/)
                 return true;
             else
                 return false;

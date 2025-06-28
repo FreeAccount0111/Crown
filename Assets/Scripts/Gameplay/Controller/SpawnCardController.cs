@@ -16,6 +16,27 @@ namespace Gameplay.Controller
         [SerializeField] private float amountBaseHeight, amountNearHeight;
         
         private Coroutine _coroutine;
+        
+        private void OnEnable()
+        {
+            GameManager.GameComplete += ColumnIsClean;
+        }
+
+        private void OnDisable()
+        {
+            GameManager.GameComplete -= ColumnIsClean;
+        }
+
+        public bool ColumnIsClean()
+        {
+            for (int i = 0; i < columns.Length; i++)
+            {
+                if(columns[i] .hasCards)
+                    return false;
+            }
+            
+            return true;
+        }
 
         public void StartSpawn(List<CardDataSo> data)
         {

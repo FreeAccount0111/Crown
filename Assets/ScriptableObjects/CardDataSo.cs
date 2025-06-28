@@ -16,7 +16,7 @@ namespace DataSO
     public class CardDataSo : ScriptableObject
     {
         public int indexCard;
-        public ColorType colorType;
+        //public ColorType colorType;
         public Sprite icon;
     }
 }

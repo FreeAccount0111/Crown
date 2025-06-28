@@ -33,6 +33,12 @@ namespace Gameplay.Card
             Initialized();
         }
 
+        private IEnumerator Start()
+        {
+            yield return new WaitUntil(() => ObjectPool.Instance != null);
+            SpawnCard();
+        }
+
         private void Initialized()
         {
             bluesData = Resources.LoadAll<CardDataSo>(BLUE_PATH);

@@ -21,13 +21,13 @@ namespace Gameplay.Queen
             var indexNext = cards[^1].Data.indexCard + 1 < 6 ? cards[^1].Data.indexCard + 1 : 0;
             var indexPrev = cards[0].Data.indexCard - 1 > 0 ? cards[0].Data.indexCard - 1 : 5;
 
-            if (cardInCrown[indexPrev] != null 
+            /*if (cardInCrown[indexPrev] != null 
                 && cardInCrown[indexPrev].Data.colorType == cards[0].Data.colorType)
                 return false;
                 
             if (cardInCrown[indexNext] != null 
                 && cardInCrown[indexNext].Data.colorType == cards[^1].Data.colorType)
-                return false;
+                return false;*/
          
             return true;
         }
@@ -55,10 +55,19 @@ namespace Gameplay.Queen
 
         IEnumerator WinCoroutine()
         {
-            content.DOScale(1.25f, 1f).SetEase(Ease.Linear);
             yield return new WaitForSeconds(1);
-            content.DOLocalMoveY(5, 1.5f);
-            content.DOScale(0, 1.5f);
+            content.DOLocalMoveY(5, 1.5f).SetEase(Ease.Linear);
+          
+            yield return new WaitForSeconds(1.5f);
+            foreach (var card in cardRenderer)
+                card.sprite = null;
+            for (int i = 0; i < cardInCrown.Length; i++)
+                cardInCrown[i] = null;
+
+            content.DOLocalMoveY(3.75f, 1.5f).OnComplete(() =>
+            {
+                GameManager.Instance.CheckGame();
+            });
         }
     }
 }
